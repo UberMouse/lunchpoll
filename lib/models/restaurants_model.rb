@@ -8,7 +8,7 @@ class Restaurant
   end
 
   def to_s
-    "#{name}[#{id}] (#{menu})"
+    "#{id}. #{name} (#{menu})"
   end
 end
 
@@ -28,7 +28,7 @@ class RestaurantsModel < SlackRubyBot::MVC::Model::Base
 
   def add(cmd_arguments)
     match = cmd_arguments.match(/"(.*)".+"(.*)"/)
-    return [false, 'unknown', 'command formatted incorrectly'] if match == nil
+    return [false, 'unknown', 'the command was formatted incorrectly'] if match == nil
 
     name, menu = match.captures
 

@@ -21,6 +21,10 @@ class LunchBot < SlackRubyBot::Bot
       desc 'Lists all the restaurants I know about'
     end
 
+    command 'results' do
+      desc 'Lists the current vote tallies'
+    end
+
     command 'vote' do
       desc 'Add a vote for which restaurant you wish to go to. Can be either the restaurant name or id'
     end

@@ -33,7 +33,7 @@ class VotingModel < SlackRubyBot::MVC::Model::Base
 
   def add_vote(name_or_id)
     return [false, 'that restaurant does not exist', nil] unless @restaurants.exists(name_or_id)
-    # return [false, 'you have already voted', nil] if vote_exists(data.user)
+    return [false, 'you have already voted', nil] if vote_exists(data.user)
 
     name = @restaurants.get_name(name_or_id)
     [create_new_vote(name_or_id), nil, name]

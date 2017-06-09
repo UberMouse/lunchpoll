@@ -12,15 +12,10 @@ class VotingView < SlackRubyBot::MVC::View::Base
   end
 
   def results_response(results)
-    results_table = results.map do |name, count|
+    say("The results are")
+    say(results.map do |name, count|
       "#{name}: #{count}"
-    end.join("\r\n")
-    msg = <<-MSG
-      The results are
-      #{results_table}
-    MSG
-
-    say(msg)
+    end.join("\r\n"))
   end
 
   def start_the_vote_response
@@ -37,6 +32,10 @@ class VotingView < SlackRubyBot::MVC::View::Base
 
   def tie_breaker_response(name)
     say("Broke the tie, #{name} is now the winner!")
+  end
+
+  def no_tie_breaker_needed
+    say('The votes are not tied, no tie breaker needed')
   end
 
   def close_the_vote_response(winner, victim, voters)

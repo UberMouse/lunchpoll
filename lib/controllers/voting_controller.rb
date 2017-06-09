@@ -12,6 +12,7 @@ class VotingController < SlackRubyBot::MVC::Controller::Base
   end
 
   def tie_breaker
+    return view.no_tie_breaker_needed unless model.tied?
     name = model.tie_breaker(match[:expression])
 
     view.tie_breaker_response(name)
