@@ -27,7 +27,7 @@ class RestaurantsModel < SlackRubyBot::MVC::Model::Base
   end
 
   def add(cmd_arguments)
-    match = cmd_arguments.match(/"(.*)".+"(.*)"/)
+    match = cmd_arguments.match(/"(.*)".+"<(.*)>"/)
     return [false, 'unknown', 'the command was formatted incorrectly'] if match == nil
 
     name, menu = match.captures
