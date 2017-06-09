@@ -10,7 +10,7 @@ class LunchBot < SlackRubyBot::Bot
   RestaurantsController.new(restaurants_model, restaurants_view)
 
   voting_model = VotingModel.new(restaurants_model)
-  voting_view = VotingView.new
+  voting_view = VotingView.new(restaurants_model)
   VotingController.new(voting_model, voting_view)
 end
 

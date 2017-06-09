@@ -1,7 +1,11 @@
 class VotingView < SlackRubyBot::MVC::View::Base
-  def added_vote_response(added_vote, failure_reason)
+  def initialize(restaurants_model)
+    @restaurants = restaurants_model
+  end
+
+  def added_vote_response(added_vote, failure_reason, name)
     if added_vote
-      say('Successfully logged your vote')
+      say("Successfully logged your vote for #{name}")
     else
       say("Did not add your vote because #{failure_reason}")
     end
@@ -17,6 +21,14 @@ class VotingView < SlackRubyBot::MVC::View::Base
     MSG
 
     say(msg)
+  end
+
+  def start_the_vote_response
+    message = <<-MSG
+    MSG
+
+    say("The voting for Friday lunch has started, choose from one of the following restaurants and cast your vote")
+    say(@restaurants.all.reduce("") { |msg, r| msg << "#{r}\r\n" })
   end
 
   private

@@ -22,14 +22,15 @@ class VotingModel < SlackRubyBot::MVC::Model::Base
     SQL
   end
 
-  def add_vote(name)
-    return [false, 'restaurant does not exist'] unless @restaurants.exists(name)
-    return [false, 'you have already voted'] if vote_exists(data.user)
+  def add_vote(name_or_id)
+    return [false, 'that restaurant does not exist', nil] unless @restaurants.exists(name_or_id)
+    return [false, 'you have already voted', nil] if vote_exists(data.user)
 
     before_count = row_count
+    name = @restaurants.get_name(name_or_id)
     @db.execute('INSERT INTO votes (voter_id, restaurant_name) VALUES (?, ?)', data.user, name)
 
-    [row_count > before_count, nil]
+    [row_count > before_count, nil, name]
   end
 
   def results
