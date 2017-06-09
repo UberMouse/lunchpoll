@@ -97,7 +97,7 @@ class VotingModel < SlackRubyBot::MVC::Model::Base
   def get_voters(name)
     voters = []
     @db.execute("SELECT voter_id FROM votes WHERE lower(restaurant_name) = ? AND date = date('now', 'localtime')", name.downcase)do |row|
-      voters << client.users[row['voter_id']]['real_name'] rescue row['voter_id']
+      voters << client.users[row['voter_id']]['name'] rescue row['voter_id']
     end
 
     voters

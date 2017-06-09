@@ -23,6 +23,7 @@ class VotingView < SlackRubyBot::MVC::View::Base
     MSG
 
     say("The voting for Friday lunch has started, choose from one of the following restaurants and cast your vote")
+    say("Feel free to DM me your vote if you wish")
     say(@restaurants.all.reduce("") { |msg, r| msg << "#{r}\r\n" })
   end
 
@@ -39,7 +40,7 @@ class VotingView < SlackRubyBot::MVC::View::Base
   end
 
   def close_the_vote_response(winner, victim, voters)
-    say("#{winner} has won! #{victim} you have been selected by the computer to perform the order")
+    say("#{winner} has won! <@#{victim}> you have been selected by the computer to perform the order")
 
     say("The following people voted")
     say(voters.join("\r\n"))
