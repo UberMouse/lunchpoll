@@ -31,6 +31,21 @@ class VotingView < SlackRubyBot::MVC::View::Base
     say(@restaurants.all.reduce("") { |msg, r| msg << "#{r}\r\n" })
   end
 
+  def need_tie_breaker(tied_restaurants)
+    say("The following restaurants are tied, a tie breaker will be needed: #{tied_restaurants.join(', ')}")
+  end
+
+  def tie_breaker_response(name)
+    say("Broke the tie, #{name} is now the winner!")
+  end
+
+  def close_the_vote_response(winner, victim, voters)
+    say("#{winner} has won! #{victim} you have been selected by the computer to perform the order")
+
+    say("The following people voted")
+    say(voters.join("\r\n"))
+  end
+
   private
 
   def say(message)
