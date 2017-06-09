@@ -18,8 +18,8 @@ class RestaurantsModel < SlackRubyBot::MVC::Model::Base
 
     @db.execute <<-SQL
       CREATE TABLE IF NOT EXISTS restaurants (
-        name varchar(255),
-        menu_link varchar(2048)
+        name VARCHAR(255),
+        menu_link VARCHAR(2048)
       );
     SQL
   end
@@ -36,11 +36,7 @@ class RestaurantsModel < SlackRubyBot::MVC::Model::Base
   end
 
   def remove(name)
-    restaurant_exists = false
-    @db.execute('SELECT name FROM restaurants WHERE name = ?', name) do |row|
-      restaurant_exists = row['name'] == name
-    end
-    return [false, name] unless restaurant_exists
+    return [false, name] unless exists(name)
 
     before_count = row_count
     @db.execute('DELETE FROM restaurants WHERE name = ?', name)
@@ -56,6 +52,15 @@ class RestaurantsModel < SlackRubyBot::MVC::Model::Base
     end
 
     models
+  end
+
+  def exists(name)
+    restaurant_exists = false
+    @db.execute('SELECT name FROM restaurants WHERE lower(name) = ?', name.downcase) do |row|
+      restaurant_exists = row['name'] == name
+    end
+
+    restaurant_exists
   end
 
   private

@@ -18,8 +18,7 @@ class RestaurantsView < SlackRubyBot::MVC::View::Base
   def list_response(restaurants)
     message = restaurants.reduce("") { |message, restaurant| message << "#{restaurant}\r\n"}
 
-    say("These are all the restaurants I know about")
-    say(message)
+    say("These are all the restaurants I know about\r\n#{message}")
   end
 
   private

@@ -1,12 +1,17 @@
 require 'slack-ruby-bot'
 require 'sqlite3'
+require 'pry'
 
 Dir.glob('lib/**/*.rb').each{ |file| require_relative file }
 
 class LunchBot < SlackRubyBot::Bot
-  restaurant_model = RestaurantsModel.new
-  restaurant_view = RestaurantsView.new
-  RestaurantsController.new(restaurant_model, restaurant_view)
+  restaurants_model = RestaurantsModel.new
+  restaurants_view = RestaurantsView.new
+  RestaurantsController.new(restaurants_model, restaurants_view)
+
+  voting_model = VotingModel.new(restaurants_model)
+  voting_view = VotingView.new
+  VotingController.new(voting_model, voting_view)
 end
 
 LunchBot.run
